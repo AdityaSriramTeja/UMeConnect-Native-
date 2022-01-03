@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "90604201469",
+    "project_id": "umeconnect-2004",
+    "storage_bucket": "umeconnect-2004.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:90604201469:android:bd60e5d7fae4b39abc2594",
+        "android_client_info": {
+          "package_name": "com.example.ume_connect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "90604201469-1ai0vagmkhul84f3o3m5tsfn2oj6k9t6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqfG_B2S44Wxq8jbv3JwTBJrvomVwZZfw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "90604201469-1ai0vagmkhul84f3o3m5tsfn2oj6k9t6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "90604201469-08m6c7jahmsf06iuk3qsjdaq7dlru01g.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.umeConnect"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
