@@ -1,8 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:ume_connect/models/firebaseUser.dart';
 import 'package:ume_connect/pages/otherProfileScreen.dart';
@@ -23,6 +21,7 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   String name = "";
+
   PageController _pageController = PageController();
   SearchPageController _searchPageController = Get.put(SearchPageController());
   late TextEditingController textcontroller;
@@ -52,13 +51,6 @@ class _SearchPageState extends State<SearchPage> {
         title: _getAppBarLayout(),
         backgroundColor: Colors.black,
         elevation: 0,
-        //  brightness: Brightness.dark,
-        // leading: IconButton(
-        //   icon: ImageIcon(AssetImage('assets/images/scan.webp'),size: 20,),
-        //   onPressed: (){
-        //     Get.toNamed(Routers.scan);
-        //  },
-        //  ),
       ),
       body: CustomScrollView(
         slivers: [
@@ -87,43 +79,23 @@ class _SearchPageState extends State<SearchPage> {
                 ),
               ),
               onChanged: (text) {
-                setState(() {
-                  name = text.toLowerCase().trim();
-                });
+                EasyDebounce.debounce(
+                    'debound1', // <-- An ID for this particular debouncer
+                    Duration(seconds: 3), // <-- The debounce duration
+                    () => setState(() {
+                          name = text.toLowerCase().trim();
+                        }) // <-- The target method
+                    );
 
                 //filter(text);
               },
             ),
-            /*
-            child: Container(
-              height: 30,
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.only(left: 10, right: 10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(40),
-                color: Colors.white.withAlpha(50),
-              ),
-              child: Row(
-                children: [
-                  //    Image.asset('assets/images/search.webp',width: 24,height: 24,color: Colors.grey,),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    'Search User',
-                    style: TextStyle(fontSize: 14, color: Colors.grey),
-                  )
-                ],
-              ),
-            ),
-            */
           ),
         ],
       ),
     );
   }
 
-  ///搜索记录
   _getSearchRecordLayout() {
     return SliverToBoxAdapter(
       child: Column(
@@ -186,6 +158,7 @@ class _SearchPageState extends State<SearchPage> {
                                               followers: document['followers'],
                                               following: document['following'],
                                               email: document['email'],
+                                              uid: document['uid'],
                                             )));
                               },
                             );

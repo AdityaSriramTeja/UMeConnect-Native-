@@ -198,8 +198,8 @@ class _ProfilePageState extends State<ProfilePage> {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           colors: <Color>[
-            Colors.orange,
-            Colors.red,
+            Colors.green,
+            Colors.white,
           ],
         ),
       ),
@@ -213,6 +213,7 @@ class _ProfilePageState extends State<ProfilePage> {
             color: ColorPlate.back1,
           ),
           body,
+          /*
           Container(
             margin: EdgeInsets.only(top: 20),
             height: 62,
@@ -242,6 +243,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
           ),
+          */
         ],
       ),
     );

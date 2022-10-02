@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:marquee/marquee.dart';
 import 'package:ume_connect/models/firebaseUser.dart';
-import 'package:ume_connect/pages/otherProfileScreen.dart';
-import 'package:ume_connect/pages/profilePage.dart';
-import 'package:ume_connect/style/style.dart';
 import 'package:ume_connect/widgets/avatar.dart';
 import 'package:like_button/like_button.dart';
 import 'package:ume_connect/widgets/commentsheet.dart' as CustomBottomSheet;
@@ -185,16 +182,6 @@ class _PhotoPageState extends State<PhotoPage> {
             ),
           ],
         ));
-  }
-
-  Future<bool> onLikeButtonTapped(bool isLiked) async {
-    /// send your request here
-    // final bool success= await sendRequest();
-
-    /// if failed, you can do nothing
-    // return success? !isLiked:isLiked;
-
-    return !isLiked;
   }
 
   Row buildPostFirstRow(String urlProfilePhoto, String username) {

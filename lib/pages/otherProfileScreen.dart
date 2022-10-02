@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ume_connect/models/firebaseUser.dart';
 import 'package:ume_connect/pages/profilePage.dart';
 import 'package:ume_connect/pages/userDetailsPage.dart';
@@ -17,7 +18,8 @@ class OtherProfilePage extends StatefulWidget {
       required this.posts,
       required this.followers,
       required this.following,
-      required this.email})
+      required this.email,
+      required this.uid})
       : super(key: key);
   final String name;
   final String profilePic;
@@ -25,12 +27,46 @@ class OtherProfilePage extends StatefulWidget {
   final int following;
   final int posts;
   final String email;
+  final String uid;
   @override
   _OtherProfilePageState createState() => _OtherProfilePageState();
 }
 
 class _OtherProfilePageState extends State<OtherProfilePage> {
-  bool isFollowing = false;
+  var followKey;
+  late bool isFollowing;
+
+  //bool liked;
+
+  @override
+  void initState() {
+    super.initState();
+    followKey = widget.uid;
+    _restorePersistedPreference();
+  }
+
+  void dispose() {
+    super.dispose();
+  }
+
+  void _restorePersistedPreference() async {
+    var preferences = await SharedPreferences.getInstance();
+    var isFollowing = preferences.getBool(followKey) ?? false;
+    setState(() => this.isFollowing = isFollowing);
+  }
+
+  void _persistPreference() async {
+    setState(() => isFollowing = !isFollowing);
+    var preferences = await SharedPreferences.getInstance();
+    preferences.setBool(followKey, isFollowing);
+    if (isFollowing) {
+      widget.followers = widget.followers + 1;
+      followUser();
+    } else {
+      widget.followers = widget.followers - 1;
+      unFollowUser();
+    }
+  }
 
   unFollowUser() {
     FirebaseFirestore.instance
@@ -102,17 +138,8 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
               title: isFollowing ? 'UnFollow' : "Follow",
             ),
             onTap: () {
-              setState(() {
-                this.isFollowing = !isFollowing;
-                //_followersCount++;
-                if (isFollowing) {
-                  widget.followers = widget.followers + 1;
-                  followUser();
-                } else {
-                  widget.followers = widget.followers - 1;
-                  unFollowUser();
-                }
-              });
+              _persistPreference();
+
               //    followOrUnFollow();
             },
           ),
